@@ -1,13 +1,10 @@
 # tuition_app/views.py
 from django.shortcuts import render, redirect
 from .forms import StudentRegistrationForm
-
-
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-
 from django.http import JsonResponse
 from .models import StudentRegistration
+from django.shortcuts import get_object_or_404
 
 def register(request):
     if request.method == 'POST':
@@ -18,7 +15,6 @@ def register(request):
     else:
         form = StudentRegistrationForm()
     return render(request, 'tuition_app/registration.html', {'form': form})
-
 
 @login_required
 def filter_students(request):
@@ -42,12 +38,12 @@ def filter_students(request):
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         students_list = list(students.values(
+            'id',  # Added 'id' to use in the redirect URL
             'name', 'phone', 'address', 'branch', 'standard', 
             'board', 'subject', 'school', 'fees', 'payment_mode', 'payment_proof'
         ))
         for student in students_list:
             if student['payment_proof']:
-                # Convert the relative file path to an absolute URL
                 student['payment_proof'] = request.build_absolute_uri('/media/' + student['payment_proof'])
         return JsonResponse({'students': students_list})
 
@@ -56,3 +52,11 @@ def filter_students(request):
         'total_students': total_students,
     }
     return render(request, 'tuition_app/filter_students.html', context)
+
+@login_required
+def student_detail(request, student_id):
+    student = get_object_or_404(StudentRegistration, id=student_id)
+    context = {
+        'student': student,
+    }
+    return render(request, 'tuition_app/student_detail.html', context)

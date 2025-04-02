@@ -6,6 +6,38 @@ from django.http import JsonResponse
 from .models import StudentRegistration
 from django.shortcuts import get_object_or_404
 
+
+def display(request):
+    students_db = StudentRegistration.objects.all()
+    
+    students = []
+    
+    for student in students_db:
+        stud = {
+            "name" : student.name,
+            "phone" : student.phone,
+            "father_name" : student.father_name,
+            "father_phone" : student.father_phone,
+            "father_occ" : student.father_occupation,
+            # "img" : student.img,
+            "address" : student.address,
+            "standard" : student.standard,
+            "board" : student.board,
+            "subject" : student.subject,
+            "school" : student.school,
+            "branch" : student.branch,
+            "fees" : student.fees,
+            "payment_mode" : student.payment_mode,
+            # "payment+proof" : student.payment_proof,
+        }
+        
+        students.append(stud)
+        
+    return JsonResponse({
+        "students" : students
+    })
+        
+
 def register(request):
     if request.method == 'POST':
         form = StudentRegistrationForm(request.POST, request.FILES)

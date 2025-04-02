@@ -10,9 +10,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const darkModeToggle = document.getElementById('dark-mode');
     const nameField = document.querySelector('[name="name"]');
     const phoneField = document.querySelector('[name="phone"]');
+    const fathernameField = document.querySelector('[name="father_name"]');
+    const fatherphoneField = document.querySelector('[name="father_phone"]');
+    const fatheroccupationField = document.querySelector('[name="father_occupation"]');
     const addressField = document.querySelector('[name="address"]');
     const paymentMode = document.querySelector('[name="payment_mode"]');
     const paymentProof = document.querySelector('[name="payment_proof"]');
+    const img = document.querySelector('[name="img"]');
     const submitButton = form.querySelector('button[type="submit"]');
 
     // Fees calculation logic
@@ -39,6 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Store current values of name, phone, and address before any changes
         const currentName = nameField.value;
         const currentPhone = phoneField.value;
+        const currentfatherName = fathernameField.value;
+        const currentfatherPhone = fatherphoneField.value;
+        const currentfatherOccupation = fatheroccupationField.value;
         const currentAddress = addressField.value;
 
         // Reset dependent fields when standard changes
@@ -101,6 +108,9 @@ document.addEventListener('DOMContentLoaded', function() {
         nameField.value = currentName;
         phoneField.value = currentPhone;
         addressField.value = currentAddress;
+        fathernameField = currentfatherName;
+        fatherphoneField = currentfatherPhone;
+        fatheroccupationField = currentfatherOccupation;
 
         // Calculate fees
         if (stdVal && boardVal && branchVal && subjectVal) {

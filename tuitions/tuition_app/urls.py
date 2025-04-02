@@ -18,4 +18,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/app/login'), name='logout'),
     path('filter_students/', views.filter_students, name = "filter_students"),
     path('student/<int:student_id>/', views.student_detail, name="student_detail"),
+    path('display', views.display),
 ]

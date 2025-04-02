@@ -54,6 +54,10 @@ class StudentRegistration(models.Model):
 
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=10)
+    father_name = models.CharField(max_length=100)
+    father_phone = models.CharField(max_length=10)
+    father_occupation = models.CharField(max_length=50)
+    img = models.FileField(upload_to='student_img/', null=True, blank=True)
     address = models.TextField()
     standard = models.CharField(max_length=2, choices=STANDARD_CHOICES)
     board = models.CharField(max_length=4, choices=BOARD_CHOICES)

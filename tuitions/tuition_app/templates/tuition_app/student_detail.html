@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details - {{ student.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ffcc33, #ff6600);
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        h1 {
+            text-align: left;
+            color: #ff6200;
+            margin-bottom: 20px;
+        }
+        .profile-image {
+            width: 30%; /* Left column takes 30% of the width */
+            text-align: center;
+            margin-top: 50px;
+        }
+        .profile-image img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ff6200;
+            margin-bottom: 10px;
+        }
+
+        .student-details {
+            width: 60%; /* Right column takes 65% of the width */
+        }
+        .student-details form {
+            margin-top: 10px;
+        }
+        .student-details label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+            text-align: left;
+        }
+        .student-details input, .student-details select, .student-details textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        .student-details textarea {
+            height: 80px;
+            resize: vertical;
+        }
+        .student-details .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .student-details button, .student-details a {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1em;
+        }
+        .student-details .back-button {
+            background-color: #ccc;
+            color: #333;
+        }
+        .student-details .back-button:hover {
+            background-color: #bbb;
+        }
+        .student-details .save-button {
+            background-color: #ff6200;
+            color: white;
+        }
+        .student-details .save-button:hover {
+            background-color: #e55a00;
+        }
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .profile-image, .student-details {
+                width: 100%;
+            }
+            .profile-image {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-image">
+            <img src="{% static 'imgs/profile-img.png' %}" alt="Profile Image">
+        </div>
+
+        <div class="student-details">
+            <h1>{{ student.name }}</h1>
+            <form method="post" action="{% url 'tuition_app:student_detail' student.id %}">
+                {% csrf_token %}
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="{{ student.name }}" required>
+
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" value="{{ student.phone }}" required>
+
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" required>{{ student.address }}</textarea>
+
+                <label for="branch">Branch:</label>
+                <select id="branch" name="branch" required>
+                    <option value="Gulmohar" {% if student.branch == "Gulmohar" %}selected{% endif %}>Gulmohar</option>
+                    <option value="Market Yard" {% if student.branch == "Market Yard" %}selected{% endif %}>Market Yard</option>
+                </select>
+
+                <label for="standard">Standard:</label>
+                <select id="standard" name="standard" required>
+                    <option value="8" {% if student.standard == "8" %}selected{% endif %}>8th</option>
+                    <option value="9" {% if student.standard == "9" %}selected{% endif %}>9th</option>
+                    <option value="10" {% if student.standard == "10" %}selected{% endif %}>10th</option>
+                    <option value="12" {% if student.standard == "12" %}selected{% endif %}>12th</option>
+                </select>
+
+                <label for="board">Board:</label>
+                <select id="board" name="board" required>
+                    <option value="CBSE" {% if student.board == "CBSE" %}selected{% endif %}>CBSE</option>
+                    <option value="SSC" {% if student.board == "SSC" %}selected{% endif %}>SSC</option>
+                    <option value="HSC" {% if student.board == "HSC" %}selected{% endif %}>HSC</option>
+                </select>
+
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" value="{{ student.subject }}" required>
+
+                <label for="school">School:</label>
+                <select id="school" name="school">
+                    <option value="" {% if not student.school %}selected{% endif %}>Not Applicable</option>
+                    <option value="Saint Michael School" {% if student.school == "Saint Michael School" %}selected{% endif %}>Saint Michael School</option>
+                    <option value="Orchid School" {% if student.school == "Orchid School" %}selected{% endif %}>Orchid School</option>
+                    <option value="Sai Angel School" {% if student.school == "Sai Angel School" %}selected{% endif %}>Sai Angel School</option>
+                    <option value="Icon Public School" {% if student.school == "Icon Public School" %}selected{% endif %}>Icon Public School</option>
+                    <option value="Takshila School" {% if student.school == "Takshila School" %}selected{% endif %}>Takshila School</option>
+                    <option value="Podar School" {% if student.school == "Podar School" %}selected{% endif %}>Podar School</option>
+                    <option value="Auxilium Convent School" {% if student.school == "Auxilium Convent School" %}selected{% endif %}>Auxilium Convent School</option>
+                    <option value="Sacred Heart Convent School" {% if student.school == "Sacred Heart Convent School" %}selected{% endif %}>Sacred Heart Convent School</option>
+                    <option value="Ashokbhau Firodia School" {% if student.school == "Ashokbhau Firodia School" %}selected{% endif %}>Ashokbhau Firodia School</option>
+                    <option value="Athare Patil School" {% if student.school == "Athare Patil School" %}selected{% endif %}>Athare Patil School</option>
+                </select>
+
+                <label for="fees">Fees:</label>
+                <input type="number" id="fees" name="fees" value="{{ student.fees }}" step="0.01" required>
+
+                <label for="payment_mode">Payment Mode:</label>
+                <input type="text" id="payment_mode" name="payment_mode" value="{{ student.payment_mode }}" required>
+
+                <label>Receipt:</label>
+                <p>
+                    {% if student.payment_proof %}
+                        <a href="{{ student.payment_proof.url }}" target="_blank">View Receipt</a>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </p>
+
+                <div class="button-group">
+                    <a href="{% url 'tuition_app:filter_students' %}" class="back-button">Back</a>
+                    <button type="submit" class="save-button">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

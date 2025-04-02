@@ -17,4 +17,5 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='tuition_app/adminlogin.html', redirect_authenticated_user=True), name='login'),
     path('logout/', LogoutView.as_view(next_page='/app/login'), name='logout'),
     path('filter_students/', views.filter_students, name = "filter_students"),
+    path('student/<int:student_id>/', views.student_detail, name="student_detail"),
 ]

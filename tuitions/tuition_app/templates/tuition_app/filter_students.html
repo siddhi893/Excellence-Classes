@@ -259,7 +259,8 @@
                     <option value="">All</option>
                     <option value="Gulmohar">Gulmohar</option>
                     <option value="Market Yard">Market Yard</option>
-                </select>
+                </select>           
+            
             </form>
         </div>
 
@@ -268,9 +269,19 @@
             <button type="button" onclick="resetFilters()">Reset Filters</button>
         </div>
 
+        <form>
+
+            <label for="searchbar" class="form-label">Search Student</label>
+            <input name = "search" value= "{{student.name}}" type="text" class="form-control">
+            <button type="submit" class = "btn btn-primary">Search</button>
+
+        </form>
+
         <div class="student-count">
             <p>Total Students: <span id="totalStudents">{{ total_students }}</span></p>
         </div>
+
+        
 
         <div class="table-wrapper">
             <table>

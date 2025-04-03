@@ -1,6 +1,6 @@
 # tuition_app/views.py
 from django.shortcuts import render, redirect
-from .forms import StudentRegistrationForm
+from .forms import RegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import StudentRegistration
@@ -37,16 +37,19 @@ def display(request):
         "students" : students
     })
         
-
-def register(request):
+def registration_view(request):
     if request.method == 'POST':
-        form = StudentRegistrationForm(request.POST, request.FILES)
+        form = RegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return render(request, 'tuition_app/success.html')
+            return redirect('tuition_app:registration_success')  # Using the URL name
     else:
-        form = StudentRegistrationForm()
+        form = RegistrationForm()
+    
     return render(request, 'tuition_app/registration.html', {'form': form})
+
+def success_view(request):
+    return render(request, 'tuition_app/success.html')
 
 @login_required
 def filter_students(request):
